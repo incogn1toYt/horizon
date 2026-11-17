@@ -13,3 +13,6 @@ fn full_static_string_storage_keeps_existing_identities_but_refuses_new_ones() {
     );
     assert!(std::ptr::eq(intern("capacity:id_0").unwrap(), first));
 }
+
+#[path = "support/no_hooks.rs"]
+mod no_hooks;

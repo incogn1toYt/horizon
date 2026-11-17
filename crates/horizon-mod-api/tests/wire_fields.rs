@@ -43,3 +43,6 @@ fn fields_share_record_encoding_and_apply_atomically() {
     fields.apply(bytes).unwrap();
     assert_eq!((count, text.as_ref(), cancel), (11, "after", true));
 }
+
+#[path = "support/no_hooks.rs"]
+mod no_hooks;

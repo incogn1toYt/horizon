@@ -2,9 +2,16 @@
 //! test, so the generated points compile once for the tests.
 // Generated fixtures exercise every shape; TODO(arismoko/horizon#2273): make the generator emit clippy-clean code.
 #![allow(clippy::all, unused_comparisons, unreachable_patterns, dead_code)]
+
+#[path = "../../horizon-mod-api/tests/support/no_hooks.rs"]
+mod no_hooks;
+
 use mod_api::__private::points::register;
+
 use mod_points::__private::POINTS;
+
 use mod_points::{PointId, RegisterError, stop};
+
 use std::sync::atomic::Ordering;
 
 fn tick(_: mod_api::HostSide<'_>, args: &mut mod_points::TickArgs) {

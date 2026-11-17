@@ -41,3 +41,6 @@ fn spawn_policy_crosses_wire_without_narrowing_limits_or_flags() {
         }
     }
 }
+
+#[path = "support/no_hooks.rs"]
+mod no_hooks;

@@ -79,3 +79,6 @@ fn oversized_numeric_counts_refuse_before_allocating() {
     }
     assert!(Reader::decode::<Vec<bool>>(&[1, 0, 0, 0, 2]).is_err());
 }
+
+#[path = "support/no_hooks.rs"]
+mod no_hooks;

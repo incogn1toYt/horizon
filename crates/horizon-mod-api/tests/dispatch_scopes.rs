@@ -117,3 +117,6 @@ fn dispatch_snapshot_nested_scopes_and_unwind_restore_the_outer_owner() {
     drop(outer);
     assert_eq!(mod_api::content::crash::current_native_call(), None);
 }
+
+#[path = "support/no_hooks.rs"]
+mod no_hooks;

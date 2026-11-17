@@ -42,3 +42,6 @@ fn unregistered_refusal_allows_retry_but_installed_access_is_not_replaced() {
     assert_eq!(out.bytes(), encoded);
     assert_eq!(Reader::new(out.bytes()).take_resource::<u32>(), Ok(42));
 }
+
+#[path = "support/no_hooks.rs"]
+mod no_hooks;

@@ -18,3 +18,6 @@ fn dispatch_before_initialization_is_inert_and_seals_the_socket() {
     drop(guard);
     assert_eq!(mod_vocab::content::crash::current_native_call(), None);
 }
+
+#[path = "support/no_hooks.rs"]
+mod no_hooks;

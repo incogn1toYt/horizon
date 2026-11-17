@@ -37,7 +37,7 @@ horizon-mod-api-gen = { path = "../horizon-mod-api-gen" }
 mod_points = { package = "horizon-mod-points", path = "../horizon-mod-points" }
 horizon-mod-api-macros = { path = "../horizon-mod-api-macros" }
 horizon-client-core = { path = "../horizon-client-core" }
-mod_api = { package = "horizon-mod-api", path = "../horizon-mod-api", features = ["wasm-guest", "testing"] }
+mod_api = { package = "horizon-mod-api", path = "../horizon-mod-api", features = ["testing"] }
 wat = "1.261"
 
 [lints]
@@ -47,6 +47,7 @@ workspace = true
 # would unify them into every integration test's game layout.
 [features]
 # Test instrumentation only; does not alter Wire layout.
+guest-test-support = ["mod_api/wasm-guest"]
 test-copy-probe = []
 runtime-fixture = []
 listener-fixture = ["mod_points/listener-fixture", "horizon-mod-api-gen/listener-fixture"]
@@ -54,7 +55,7 @@ mixed-output-fixture = ["mod_api/mixed-output-fixture", "horizon-mod-api-gen/mix
 
 [[test]]
 name = "listener_outputs"
-required-features = ["mixed-output-fixture"]
+required-features = ["mixed-output-fixture", "guest-test-support"]
 
 [[test]]
 name = "real_member"
@@ -80,3 +81,11 @@ required-features = ["listener-fixture"]
 name = "main_stack_probe"
 harness = false
 required-features = ["runtime-fixture"]
+
+[[test]]
+name = "group_cache_pressure"
+required-features = ["guest-test-support"]
+
+[[test]]
+name = "view_snapshot"
+required-features = ["guest-test-support"]

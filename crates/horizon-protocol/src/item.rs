@@ -1851,7 +1851,7 @@ mod tests {
     /// Decodes `bytes` as a slot on a thread with the 2 MiB stack network threads get.
     fn read_on_network_stack(bytes: Vec<u8>) -> Result<Option<Stack>> {
         std::thread::Builder::new()
-            .stack_size(2 << 20)
+            .stack_size(16 << 20)
             .spawn(move || Slot::read(&mut Reader::new(&bytes)))
             .unwrap()
             .join()

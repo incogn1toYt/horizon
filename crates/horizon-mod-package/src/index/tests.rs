@@ -52,13 +52,31 @@ fn reads_the_sample_and_keeps_unknown_kinds() {
 #[test]
 fn a_capability_this_build_does_not_know_blocks_only_its_version() {
     let text = std::fs::read_to_string(fixtures().join("index-v1.json")).unwrap();
-    let old = text.replacen(
-        "\"registries\"\n          ],",
-        "\"registries\", \"game-read\"\n          ],",
-        1,
-    );
-    assert_ne!(old, text, "the fixture's capability list moved");
-    let index = Index::parse(&old).unwrap();
+    let mut document: serde_json::Value =
+        serde_json::from_str(&text).expect("the index fixture must be valid JSON");
+
+    let projects = document["projects"]
+        .as_array_mut()
+        .expect("the index fixture must contain a projects array");
+    let hud = projects
+        .iter_mut()
+        .find(|project| project["id"].as_str() == Some("coords_hud"))
+        .expect("the index fixture must contain coords_hud");
+    let versions = hud["versions"]
+        .as_array_mut()
+        .expect("coords_hud must contain a versions array");
+    let version = versions
+        .first_mut()
+        .expect("coords_hud must contain at least one version");
+    let capabilities = version["capabilities"]
+        .as_array_mut()
+        .expect("coords_hud's version must contain a capabilities array");
+
+    capabilities.push(serde_json::Value::String("game-read".into()));
+    let modified =
+        serde_json::to_string(&document).expect("the modified index fixture must serialize");
+
+    let index = Index::parse(&modified).unwrap();
     assert_eq!(index.projects.len(), sample().projects.len());
     let hud = index.project("coords_hud").unwrap();
     let listed = &hud.versions[0].capabilities;

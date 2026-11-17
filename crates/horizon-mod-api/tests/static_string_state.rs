@@ -68,3 +68,6 @@ mod tests {
         assert_eq!(Reader::decode::<T>(out.bytes()), Ok(value));
     }
 }
+
+#[path = "support/no_hooks.rs"]
+mod no_hooks;

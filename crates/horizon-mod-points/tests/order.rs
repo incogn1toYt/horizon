@@ -1,6 +1,11 @@
 // Generated fixtures exercise every shape; TODO(arismoko/horizon#2273): make the generator emit clippy-clean code.
 #![allow(clippy::all, unused_comparisons, unreachable_patterns, dead_code)]
+
+#[path = "../../horizon-mod-api/tests/support/no_hooks.rs"]
+mod no_hooks;
+
 use mod_api::__private::points::register;
+
 use mod_points::{
     __private::{ApiKind, Forward, PointHost, SlotListener, TABLE, seal},
     PointId,

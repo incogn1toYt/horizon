@@ -374,3 +374,6 @@ fn main() {
         "warm overhead exceeds approximately 20% gate: {overhead:.2}%"
     );
 }
+
+#[path = "../tests/support/no_hooks.rs"]
+mod no_hooks;

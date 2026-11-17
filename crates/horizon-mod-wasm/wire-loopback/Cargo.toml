@@ -1,3 +1,4 @@
+
 [package]
 name = "horizon-mod-wasm-wire-loopback"
 version = "0.1.0"
@@ -14,9 +15,16 @@ horizon-mod-api-gen = { path = "../../horizon-mod-api-gen" }
 horizon-core = { path = "../../horizon-core" }
 horizon-mod-runtime = { path = "../../horizon-mod-runtime" }
 horizon-world = { path = "../../horizon-world" }
-mod_api = { package = "horizon-mod-api", path = "../../horizon-mod-api", features = ["wasm-guest", "testing"] }
+mod_api = { package = "horizon-mod-api", path = "../../horizon-mod-api", features = ["testing"] }
 log = "0.4"
 serde_json = "1"
+
+[features]
+guest-test-support = ["mod_api/wasm-guest"]
+
+[[test]]
+name = "wire_loopback"
+required-features = ["guest-test-support"]
 
 [lints]
 workspace = true

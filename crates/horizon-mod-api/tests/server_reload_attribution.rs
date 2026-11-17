@@ -51,3 +51,6 @@ fn add_listener_attributes_its_calls_to_the_registering_mod() {
         .unwrap();
     assert_eq!(listener.owner, None);
 }
+
+#[path = "support/no_hooks.rs"]
+mod no_hooks;

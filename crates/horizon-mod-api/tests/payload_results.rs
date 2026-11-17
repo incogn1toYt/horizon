@@ -106,3 +106,6 @@ fn holder_snapshots_share_resolved_names_and_format_all_diagnostic_fields() {
         "mod example export configuration on thread payload-network held for 31337 ms"
     );
 }
+
+#[path = "support/no_hooks.rs"]
+mod no_hooks;

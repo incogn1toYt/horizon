@@ -63,3 +63,6 @@ fn tooltip_appender_restores_owner_even_on_panic() {
     drop(outer);
     assert_eq!(mod_api::content::crash::current_native_mod(), None);
 }
+
+#[path = "support/no_hooks.rs"]
+mod no_hooks;

@@ -24,3 +24,6 @@ fn math_profile_wire_layout_and_tags_are_pinned() {
         Err(WireError::Tag(4))
     ));
 }
+
+#[path = "support/no_hooks.rs"]
+mod no_hooks;

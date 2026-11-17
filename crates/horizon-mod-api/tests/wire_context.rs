@@ -42,3 +42,6 @@ fn resource_context_is_scoped_and_encoding_keeps_first_error() {
     out.clear();
     assert_eq!(out.error(), None);
 }
+
+#[path = "support/no_hooks.rs"]
+mod no_hooks;

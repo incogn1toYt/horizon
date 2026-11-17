@@ -69,3 +69,6 @@ fn metadata_resource_worker_reads_allocate_nothing() {
     .unwrap();
     assert_eq!(state.property(metadata, "lit"), Ok(Some("false")));
 }
+
+#[path = "support/no_hooks.rs"]
+mod no_hooks;

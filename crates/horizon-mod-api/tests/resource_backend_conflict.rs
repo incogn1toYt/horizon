@@ -17,3 +17,6 @@ fn competing_resource_backend_refuses_platform_initialization_permanently() {
         );
     }
 }
+
+#[path = "support/no_hooks.rs"]
+mod no_hooks;

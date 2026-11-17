@@ -130,8 +130,9 @@ fn json_files(
     root: &horizon_assets::resource_source::ResourceSource,
     dir: &Path,
 ) -> Vec<(String, Json)> {
-    // Resource names use `/`; a `PathBuf` join puts a `\` in on Windows, which lists nothing.
-    root.list(&dir.to_string_lossy().replace('\\', "/"))
+    let prefix = dir.to_string_lossy().replace('\\', "/");
+
+    root.list(&prefix)
         .into_iter()
         .filter(|p| p.ends_with(".json"))
         .filter_map(|p| {
@@ -140,7 +141,6 @@ fn json_files(
         })
         .collect()
 }
-
 impl super::ParticleOptions {
     /// These options with the block or item they carry (`source`), for particle modifier
     /// filters.

@@ -11,3 +11,6 @@ fn dispatch_before_installation_is_empty() {
     assert!(mod_api::__private::mods().is_empty());
     assert!(components.is_empty());
 }
+
+#[path = "support/no_hooks.rs"]
+mod no_hooks;

@@ -70,3 +70,6 @@ fn an_encoding_refusal_does_not_consume_resource_registry_state() {
     assert_eq!(registry.0.borrow()[0].downcast_ref::<u32>(), Some(&42));
     assert_eq!(writer.bytes(), 7u64.to_le_bytes());
 }
+
+#[path = "support/no_hooks.rs"]
+mod no_hooks;

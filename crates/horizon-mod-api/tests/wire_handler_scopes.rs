@@ -71,3 +71,6 @@ mod tests {
         ));
     }
 }
+
+#[path = "support/no_hooks.rs"]
+mod no_hooks;

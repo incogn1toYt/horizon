@@ -66,3 +66,6 @@ fn subscriber_tick_benchmark() {
         "tick dispatch: before {baseline:.2} ns, subscribed {subscribed:.2} ns per call ({iterations} iterations)"
     );
 }
+
+#[path = "support/no_hooks.rs"]
+mod no_hooks;

@@ -18,3 +18,6 @@ fn external_area_macros_implement_host_unions() {
     let _: &dyn mod_api::ClientHost = &Host;
     assert!(std::hint::black_box(INCLUDED));
 }
+
+#[path = "support/no_hooks.rs"]
+mod no_hooks;

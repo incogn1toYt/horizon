@@ -3,8 +3,12 @@
 //! 64-item fixture limit; real Game registry conversion is covered by item_snapshot tests.
 #![cfg(feature = "mixed-output-fixture")]
 
+#[path = "support/no_hooks.rs"]
+mod no_hooks;
+
 #[path = "mixed-output-fixture/src/lib.rs"]
 mod guest;
+
 use mod_api::{
     Flow, Hooks, ItemStack, MixedOutputFixtureEvent, ModEntry, ServerHost, StackWriteError,
 };
@@ -35,6 +39,7 @@ impl Hooks for Before {
         Flow::Continue
     }
 }
+
 struct SkipsCancelled;
 #[mod_api::__subscriptions]
 impl Hooks for SkipsCancelled {
@@ -56,6 +61,7 @@ impl Hooks for SkipsCancelled {
         Flow::Continue
     }
 }
+
 struct After;
 #[mod_api::__subscriptions]
 impl Hooks for After {
@@ -80,17 +86,21 @@ impl Hooks for After {
 
 struct Warnings(Mutex<Vec<String>>);
 static WARNINGS: Warnings = Warnings(Mutex::new(Vec::new()));
+
 impl log::Log for Warnings {
     fn enabled(&self, metadata: &log::Metadata<'_>) -> bool {
         metadata.level() <= log::Level::Warn
     }
+
     fn log(&self, record: &log::Record<'_>) {
         if self.enabled(record.metadata()) {
             self.0.lock().unwrap().push(record.args().to_string());
         }
     }
+
     fn flush(&self) {}
 }
+
 fn counts(stacks: &[ItemStack]) -> Vec<u32> {
     stacks.iter().map(ItemStack::count).collect()
 }
@@ -112,6 +122,7 @@ fn matrix(listener: ModEntry) {
             .unwrap();
             mod_api::__private::mark_game_thread();
             let _phase = mod_api::__private::PhaseOwner::scope(mod_api::__private::ModPhase::World);
+
             for (mode, expected, expected_damage, expected_cancel, conversions) in [
                 (0, vec![2], 7, true, vec![vec![65]]),
                 (1, vec![3, 4], 9, false, vec![vec![3, 4]]),
@@ -123,6 +134,7 @@ fn matrix(listener: ModEntry) {
                 let mut drops = vec![ItemStack::new(key, 2).unwrap()];
                 let (mut damage, mut cancelled) = (0, false);
                 let mut converted = Vec::new();
+
                 mod_api::dispatch_mixed_output_fixture(
                     &mut Quiet,
                     mode,
@@ -138,6 +150,7 @@ fn matrix(listener: ModEntry) {
                         }
                     },
                 );
+
                 assert_eq!(counts(&drops), expected, "mode {mode}");
                 assert_eq!(
                     (damage, cancelled),
@@ -148,6 +161,7 @@ fn matrix(listener: ModEntry) {
                     converted, conversions,
                     "mode {mode}: validate only changed listener lists"
                 );
+
                 let warnings = WARNINGS.0.lock().unwrap();
                 if matches!(mode, 1 | 4) {
                     assert!(warnings.is_empty(), "{warnings:?}");
@@ -186,6 +200,7 @@ fn generated_mixed_outputs_cross_real_guest_boundary() {
             vec![manifest.id.clone()],
             vec![],
         );
+
         let loaded = horizon_mod_wasm::load(
             &std::fs::read(
                 std::env::var("HORIZON_WASM_STD").expect("build the shared wasm std member"),
@@ -196,6 +211,7 @@ fn generated_mixed_outputs_cross_real_guest_boundary() {
                 module: Package::read_wasm(path).unwrap(),
             }],
         );
+
         assert!(loaded.refused.is_empty(), "{:?}", loaded.refused);
         assert_eq!(loaded.mods.len(), 1);
         loaded.initialize(&[info]).unwrap();
